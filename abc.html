@@ -1,15 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <title>Open New Tab</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Redirect Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+        .tool-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+        }
+        h2 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            border-color: #1a73e8;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #1557b0;
+        }
+    </style>
 </head>
 <body>
 
-<a href="https://google.com"
-   target="_blank"
-   rel="noopener noreferrer">
-   Mở Google
-</a>
+<div class="tool-container">
+    <h2>Bộ Chuyển Hướng Liên Kết</h2>
+    <input type="text" id="urlInput" placeholder="Dán hoặc nhập link tại đây...">
+    <button onclick="redirectToUrl()">Go</button>
+</div>
+
+<script>
+function redirectToUrl() {
+    // Lấy dữ liệu từ ô input và xóa khoảng trắng thừa
+    let targetUrl = document.getElementById('urlInput').value.trim();
+    
+    // Kiểm tra nếu ô nhập trống
+    if (targetUrl === "") {
+        alert("Bạn chưa nhập liên kết nào cả!");
+        return;
+    }
+    
+    // Tự động kiểm tra và thêm tiền tố "https://" nếu người dùng chỉ gõ tên miền (ví dụ: google.com)
+    if (!/^https?:\/\//i.test(targetUrl)) {
+        targetUrl = 'https://' + targetUrl;
+    }
+    
+    // Tiến hành chuyển hướng đến liên kết được chỉ định
+    // Sử dụng _blank để mở ở tab mới, hoặc thay bằng '_self' để mở ngay tại tab hiện tại
+    window.open(targetUrl, '_blank');
+}
+
+// Thêm tính năng: Nhấn phím Enter trên bàn phím cũng tự động kích hoạt nút Go
+document.getElementById("urlInput").addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        redirectToUrl();
+    }
+});
+</script>
 
 </body>
 </html>
